@@ -1,0 +1,92 @@
+{% extends 'basic.html' %} {% block title %}Dashboard {% endblock title %} {% block body %}
+{% load app_tags %}
+<h3 class="text-center  text-success">My Bookings </h3>
+
+<table class="table">
+    <thead>
+        <th>User</th>
+        <th>Room</th>
+        <th>Location</th>
+        <th>Person</th>
+        <th>Check in</th>
+        <th>Check out</th>
+        <th>Price</th>
+    </thead>
+    {% for each_booking in bookings %}
+    <tr>
+        <td>{{each_booking.guest.username}}</td>
+        <td>{{each_booking.room.roomnumber}}</td>
+        <td>{{each_booking.room.hotel.location}}</td>
+        <td>{{each_booking.room.capacity}}</td>
+        <td>{{each_booking.check_in}}</td>
+        <td>{{each_booking.check_out}}</td>
+        <td>{{each_booking.room.price}}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<div class="container bg-primary">
+
+    <div class="row">
+        <div class="col-md-6 col-lg-6 col-xlg-6 col-sm-12 mx-auto my-4 bg-light">
+            <h3 class="text-center  text-success">Total Payment : {{totalamount}}</h3>
+            <h2 class="text-center" >Make Your Payment through</h2>
+            
+            <div class="container text-center" >
+                <div class="row">
+                    <div class="col-md-6 col-lg-6 col-xlg-6 col-sm-12 mx-auto my-4 bg-light " >
+                        <button id="paypal-button-container" style="height: 200px; width: 200px;"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+    paypal.Button.render({
+
+        env: 'sandbox', // sandbox | production
+
+        // PayPal Client IDs - replace with your own
+        // Create a PayPal app: https://developer.paypal.com/developer/applications/create
+        client: {
+            sandbox: 'AUCK8njMDuEG_KQbP-821qCvpt8ntHTLC0rEGbUED2UBcVfa2ooI7SMsOOASpLbTwQlOi_6quhFZkDyk',
+            production: '<insert production client id>'
+        },
+
+        // Show the buyer a 'Pay Now' button in the checkout flow
+        commit: true,
+
+        // payment() is called when the button is clicked
+        payment: function (data, actions) {
+
+            // Make a call to the REST api to create the payment
+            return actions.payment.create({
+                payment: {
+                    transactions: [
+                        {
+                            amount: { total: '{{totalamount}}', currency: 'USD' }
+                        }
+                    ]
+                }
+            });
+        },
+
+        // onAuthorize() is called when the buyer approves the payment
+        onAuthorize: function (data, actions) {
+
+            // Make a call to the REST api to execute the payment
+            return actions.payment.execute().then(function () {
+                window.alert('Payment Complete!');
+                
+            });
+        }
+
+    }, '#paypal-button-container');
+</script>
+
+
+{% endblock body %}
