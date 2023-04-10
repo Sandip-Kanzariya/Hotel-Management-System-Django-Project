@@ -353,6 +353,7 @@ def user_bookings(request):
 @login_required(login_url='/staff')
 def add_new_location(request):
     if request.method == "POST" and request.user.is_staff:
+        hname = request.POST['new_hotel']
         owner = request.POST['new_owner']
         location = request.POST['new_city']
         state = request.POST['new_state']
@@ -364,6 +365,7 @@ def add_new_location(request):
             return redirect("staffpanel")
         else:
             new_hotel = Hotels()
+            new_hotel.name = hname
             new_hotel.owner = owner
             new_hotel.location = location
             new_hotel.state = state

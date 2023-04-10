@@ -210,7 +210,7 @@
         <th>Room Number</th>
         <th>Type</th>
         <th>Status</th>
-        <th>Price</th>
+        <th>Price( in $ )</th>
         <th>Capacity</th>
         <th>Size</th>
         <th colspan="2">Actions</th>
@@ -260,6 +260,10 @@
                             <form action="/staff/panel/add-new-location" method="POST">
                                 {% csrf_token %}
 
+                                <div class="form-group">
+                                    <label for="name">Hotel :</label>
+                                    <input type="text" class="form-control " id="new_hotel" name="new_hotel">
+                                </div>
 
                                 <div class="form-group">
                                     <label for="Owner">Owner:</label>
