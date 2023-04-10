@@ -21,7 +21,7 @@ class Rooms(models.Model):
     ROOM_TYPE = ( 
     ("1", "premium"), 
     ("2", "deluxe"),
-    ("3","basic"),    
+    ("3","regular"),    
     ) 
 
     #type,no_of_rooms,capacity,prices,Hotel
@@ -33,7 +33,7 @@ class Rooms(models.Model):
     status = models.CharField(choices =ROOM_STATUS,max_length = 15)
     roomnumber = models.IntegerField()
     def __str__(self):
-        return self.hotel.name
+        return f"{self.hotel.name}{self.roomnumber}"
 
 class Reservation(models.Model):
 

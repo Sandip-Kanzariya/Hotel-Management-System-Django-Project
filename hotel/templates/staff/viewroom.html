@@ -2,14 +2,15 @@
 <h3 class="text-success"> Details</h3>
 <hr>
 <div class="container mx-0 ">
+    
     <p><b>Number :-</b> {{room.roomnumber}}</p>
     <p><b>Type :-</b> {{room.get_room_type_display}}</p>
     <p><b>Capacity :-</b> {{room.capacity}} person</p>
     <p><b>Size :-</b> {{room.size}} ft</p>
     <p><b>Status :-</b> {{room.get_status_display| capfirst}} </p>
-    <p><b>City :-</b> {{room.hotel.location| capfirst}} </p>
+    <p><b>City(Address) :-</b> {{room.hotel.location| capfirst}} </p>
     <p><b>State :-</b> {{room.hotel.state| capfirst}} </p>
-    <p><b>India :-</b> {{room.hotel.country| capfirst}} </p>
+    <p><b>Country :-</b> {{room.hotel.country| capfirst}} </p>
 </div>
 
 
